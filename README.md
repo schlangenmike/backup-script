@@ -18,6 +18,7 @@ A simple bash script to create timestamped, compressed backups of directories.
 - Adds timestamp to each backup
 - Stores backups in `~/backups/`
 - Shows backup size after completion
+- Automatically keeps only the 5 most recent backups
 
 ## Requirements
 
