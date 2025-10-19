@@ -33,10 +33,25 @@ tar -czf "$BACKUP_DIR/$BACKUP_NAME" -C "$(dirname "$SOURCE_DIR")" "$(basename "$
 if [ $? -eq 0 ]; then
     echo "✅ Backup created successfully!"
     echo "📦 Backup file: $BACKUP_DIR/$BACKUP_NAME"
-    
+
     # Show backup size
     BACKUP_SIZE=$(du -h "$BACKUP_DIR/$BACKUP_NAME" | cut -f1)
     echo "📊 Size: $BACKUP_SIZE"
+
+    # Clean up old backups (keep only last 5)
+    echo ""
+    echo "🧹 Cleaning up old backups..."
+
+    BACKUP_COUNT=$(ls -1 "$BACKUP_DIR"/backup-*.tar.gz 2>/dev/null | wc -l)
+
+    if [ "$BACKUP_COUNT" -gt 5 ]; then
+        echo "Found $BACKUP_COUNT backups, keeping only the 5 most recent..."
+        ls -1t "$BACKUP_DIR"/backup-*.tar.gz | tail -n +6 | xargs rm -f
+        echo "✅ Cleanup complete!"
+    else
+        echo "Only $BACKUP_COUNT backup(s) exist, no cleanup needed."
+    fi
+
 else
     echo "❌ Backup failed!"
     exit 1
