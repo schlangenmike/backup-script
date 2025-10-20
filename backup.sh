@@ -1,5 +1,7 @@
 #!/bin/bash
 
+VERSION="1.0.0"
+
 # backup.sh - Create timestamped backups of directories
 
 # Check if directory argument provided
@@ -24,6 +26,7 @@ fi
 mkdir -p "$BACKUP_DIR"
 
 echo "🔄 Creating backup..."
+echo "Version: $VERSION"
 echo "Source: $SOURCE_DIR"
 echo "Destination: $BACKUP_DIR/$BACKUP_NAME"
 
